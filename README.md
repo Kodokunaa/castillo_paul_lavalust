@@ -39,7 +39,7 @@ Whether you are building a simple web application, a REST API, or a teaching pro
 
 ## Installation
 
-**Clone the repository:**
+**Clone the repo:**
 
 ```bash
 git clone https://github.com/ronmarasigan/lavalust.git
