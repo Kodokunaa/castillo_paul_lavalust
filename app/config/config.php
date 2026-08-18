@@ -79,7 +79,14 @@ $config['environment'] = getenv('APP_ENV') ?: 'development';
 | WARNING: You MUST set this value!
 |
 */
-$config['base_url'] 				= '';
+$request_scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+$request_host   = $_SERVER['HTTP_HOST'] ?? '';
+$script_folder = isset($_SERVER['SCRIPT_NAME'])
+    ? rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'])), '/.')
+    : '';
+
+$config['base_url'] = getenv('APP_URL')
+    ?: ($request_host ? $request_scheme . '://' . $request_host . $script_folder . '/' : '');
 
 /*
 |--------------------------------------------------------------------------
@@ -99,7 +106,7 @@ $config['proxy_enabled']           = FALSE;
 | variable to blank.
 |
 */
-$config['index_page']               = 'index.php';
+$config['index_page']               = '';
 
 /*
 |--------------------------------------------------------------------------
@@ -348,4 +355,13 @@ $config['csrf_token_name']         = 'csrf_test_name';
 $config['csrf_cookie_name']        = 'csrf_cookie_name';
 $config['csrf_expire']             = 7200;
 $config['csrf_regenerate']         = FALSE;
+
+/*
+|--------------------------------------------------------------------------
+| Application Middleware
+|--------------------------------------------------------------------------
+| Load the application-owned middleware map. This keeps the framework core
+| untouched while making route middleware available to the kernel runner.
+*/
+require APP_DIR . 'config/middleware.php';
 ?>
