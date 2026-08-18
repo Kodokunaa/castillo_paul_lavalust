@@ -1,9 +1,12 @@
 Options -Indexes
 DirectoryIndex index.php
+AcceptPathInfo On
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^ index.php [L,QSA]
+    # LavaLust 4.6 derives the route from PHP_SELF, so retain the requested
+    # path as PATH_INFO instead of rewriting every request to plain index.php.
+    RewriteRule ^(.+)$ index.php/$1 [END,QSA]
 </IfModule>
