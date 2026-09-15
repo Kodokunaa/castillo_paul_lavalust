@@ -1,5 +1,24 @@
 # LavaLust Framework
 
+## Laboratory Exercise 5
+
+This project now includes a session-authenticated product CRUD application at `/products`.
+The root URL redirects to the Lab 5 login, while the earlier student and user pages remain
+available at `/student` and `/users`.
+
+### Local setup
+
+1. Create a MySQL database and run `database/lab5.sql`.
+2. Copy `.env.example` to `.env` and set the database values.
+3. Generate a password hash with `php -r "echo password_hash('your-password', PASSWORD_DEFAULT), PHP_EOL;"`.
+4. Set `LAB5_USERNAME` and `LAB5_PASSWORD_HASH` in `.env`.
+5. Serve the project with Apache, using `public/` as the document root.
+
+For Aiven, upload its CA certificate to Render as the secret file `ca.pem`, then set
+`DB_SSL_CA=/etc/secrets/ca.pem`. Configure the remaining `DB_*`, `APP_URL`, `APP_KEY`,
+`LAB5_USERNAME`, and `LAB5_PASSWORD_HASH` values in Render Environment Variables.
+Never commit `.env`, database passwords, or the CA certificate.
+
 > A lightweight, fast PHP framework built for developers who want clean MVC architecture without unnecessary complexity or performance overhead.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)

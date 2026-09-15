@@ -44,7 +44,18 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 */
 /** @var object $router **/
 
-$router->get('/', 'UsersController::index');
+$router->get('/', 'AuthController::index');
+$router->get('/login', 'AuthController::login');
+$router->post('/login', 'AuthController::authenticate');
+$router->post('/logout', 'AuthController::logout')->middleware('lab5');
+
+$router->get('/products', 'ProductController::index')->middleware('lab5');
+$router->get('/products/create', 'ProductController::create')->middleware('lab5');
+$router->post('/products/create', 'ProductController::store')->middleware('lab5');
+$router->get('/products/edit/{id}', 'ProductController::edit')->where_number('id')->middleware('lab5');
+$router->post('/products/edit/{id}', 'ProductController::update')->where_number('id')->middleware('lab5');
+$router->get('/products/delete/{id}', 'ProductController::confirm_delete')->where_number('id')->middleware('lab5');
+$router->post('/products/delete/{id}', 'ProductController::destroy')->where_number('id')->middleware('lab5');
 $router->get('/student', 'StudentController::index');
 $router->get('/student/profile', 'StudentController::profile')->middleware('student');
 $router->get('/users', 'UsersController::index');

@@ -1,0 +1,7 @@
+.git
+.env
+runtime/session/*
+runtime/logs/*
+runtime/cache/*
+*.zip
+README.local*
