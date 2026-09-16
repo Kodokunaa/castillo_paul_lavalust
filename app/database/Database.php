@@ -268,6 +268,13 @@ class Database {
             PDO::ATTR_EMULATE_PREPARES   => false,
         );
 
+        // Application-specific Aiven TLS support. Local databases can leave DB_SSL_CA empty.
+        if ($driver === 'mysql' && !empty($database_config['ssl_ca'])
+            && defined('PDO::MYSQL_ATTR_SSL_CA') && is_readable($database_config['ssl_ca'])) {
+            $options[PDO::MYSQL_ATTR_SSL_CA] = $database_config['ssl_ca'];
+            $options[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = true;
+        }
+
         try {
             $this->db = new PDO($dsn, $username, $password, $options);
             $this->driver = $this->db->getAttribute(PDO::ATTR_DRIVER_NAME);
