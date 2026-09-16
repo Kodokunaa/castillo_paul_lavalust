@@ -1,2 +1,74 @@
-<?php defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed'); $editing = $mode === 'edit'; $action = $editing ? 'products/edit/'.$product['id'] : 'products/create'; ?>
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title><?= $editing ? 'Edit' : 'Add'; ?> Product</title><style>body{font-family:Arial,sans-serif;background:#f8fafc;color:#172033;margin:0}.card{max-width:650px;margin:2rem auto;background:#fff;padding:2rem;border-radius:12px;box-shadow:0 8px 25px #0001}label{display:block;font-weight:600;margin:1rem 0 .35rem}input,textarea{width:100%;padding:.7rem;box-sizing:border-box;border:1px solid #ccd2dc;border-radius:6px}textarea{min-height:110px}.button,button{display:inline-block;padding:.7rem 1rem;border:0;border-radius:6px;background:#1769e0;color:#fff;text-decoration:none;font-weight:600;cursor:pointer;margin-top:1.2rem}.errors{background:#fee2e2;color:#991b1b;padding:.7rem 1.5rem;border-radius:6px}</style></head><body><main class="card"><a href="<?= html_escape(site_url('products')); ?>">← Products</a><h1><?= $editing ? 'Edit' : 'Add'; ?> product</h1><?php if ($errors): ?><ul class="errors"><?php foreach($errors as $error): ?><li><?= html_escape($error); ?></li><?php endforeach; ?></ul><?php endif; ?><form method="post" action="<?= html_escape(site_url($action)); ?>"><input type="hidden" name="csrf_token" value="<?= html_escape($csrf_token); ?>"><label for="product_name">Product name</label><input id="product_name" name="product_name" maxlength="100" required value="<?= html_escape($product['product_name'] ?? ''); ?>"><label for="description">Description</label><textarea id="description" name="description" required><?= html_escape($product['description'] ?? ''); ?></textarea><label for="price">Price</label><input id="price" name="price" inputmode="decimal" required value="<?= html_escape($product['price'] ?? ''); ?>"><label for="quantity">Quantity</label><input id="quantity" name="quantity" inputmode="numeric" required value="<?= html_escape($product['quantity'] ?? ''); ?>"><button type="submit">Save product</button></form></main></body></html>
+<?php
+defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
+$editing = $mode === 'edit';
+$action = $editing ? 'products/edit/' . $product['id'] : 'products/create';
+?>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title><?= $editing ? 'Edit' : 'Add'; ?> Product</title>
+    <?php include APP_DIR . 'views/lab5/_styles.php'; ?>
+</head>
+<body>
+    <div class="shell">
+        <header class="topbar">
+            <a class="brand" href="<?= html_escape(site_url('products')); ?>">
+                <span class="brand-mark">PC</span>
+                <span>Castillo / Product Management</span>
+            </a>
+        </header>
+
+        <main>
+            <section class="panel">
+                <span class="page-label"><?= $editing ? 'Edit Product' : 'Add Product'; ?></span>
+                <p class="kicker">Laboratory Exercise No. 5</p>
+                <h1><?= $editing ? 'Edit' : 'Add'; ?> Product</h1>
+
+                <?php if ($errors): ?>
+                    <ul class="alert">
+                        <?php foreach ($errors as $error): ?>
+                            <li><?= html_escape($error); ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
+
+                <form class="form-grid" method="post" action="<?= html_escape(site_url($action)); ?>">
+                    <input type="hidden" name="csrf_token" value="<?= html_escape($csrf_token); ?>">
+
+                    <div>
+                        <label for="product_name">Product name</label>
+                        <input id="product_name" name="product_name" maxlength="100" required value="<?= html_escape($product['product_name'] ?? ''); ?>">
+                    </div>
+
+                    <div>
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" required><?= html_escape($product['description'] ?? ''); ?></textarea>
+                    </div>
+
+                    <div>
+                        <label for="price">Price</label>
+                        <input id="price" name="price" inputmode="decimal" required value="<?= html_escape($product['price'] ?? ''); ?>">
+                    </div>
+
+                    <div>
+                        <label for="quantity">Quantity</label>
+                        <input id="quantity" name="quantity" inputmode="numeric" required value="<?= html_escape($product['quantity'] ?? ''); ?>">
+                    </div>
+
+                    <div class="actions">
+                        <button class="primary" type="submit">Save product</button>
+                        <a class="button" href="<?= html_escape(site_url('products')); ?>">Cancel</a>
+                    </div>
+                </form>
+            </section>
+        </main>
+
+        <footer>
+            <span>Laboratory Exercise No. 5</span>
+            <span>&copy; <?= date('Y'); ?> Paul Castillo</span>
+        </footer>
+    </div>
+</body>
+</html>
